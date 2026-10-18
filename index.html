@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Profile - Interactive Themes</title>
+  <!-- Google Fonts: Plus Jakarta Sans & Space Grotesk for dynamic modern look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"Space Grotesk"', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    /* CSS Variables for Dynamic Theme Switching */
+    :root[data-theme="indigo"] {
+      --bg-gradient: radial-gradient(circle at 20% 20%, #1e1b4b 0%, #0f172a 50%, #020617 100%);
+      --card-bg: rgba(15, 23, 42, 0.65);
+      --card-border: rgba(129, 140, 248, 0.25);
+      --card-glow: 0 20px 50px rgba(99, 102, 241, 0.2);
+      --accent-primary: #818cf8;
+      --accent-secondary: #c084fc;
+      --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+      --text-label: #a5b4fc;
+      --text-value: #f8fafc;
+      --badge-hobby-bg: rgba(168, 85, 247, 0.15);
+      --badge-hobby-border: rgba(168, 85, 247, 0.4);
+      --badge-hobby-text: #e9d5ff;
+      --badge-year-bg: rgba(99, 102, 241, 0.2);
+      --badge-year-text: #818cf8;
+      --status-dot: #10b981;
+      --status-glow: rgba(16, 185, 129, 0.6);
+      --avatar-border: #818cf8;
+      --avatar-glow: rgba(129, 140, 248, 0.5);
+      --divider-color: rgba(255, 255, 255, 0.08);
+      --orb-1: #4f46e5;
+      --orb-2: #9333ea;
+    }
+
+    :root[data-theme="cyberpunk"] {
+      --bg-gradient: radial-gradient(circle at 80% 20%, #0d131f 0%, #050811 60%, #000000 100%);
+      --card-bg: rgba(10, 16, 28, 0.75);
+      --card-border: rgba(6, 182, 212, 0.3);
+      --card-glow: 0 20px 50px rgba(6, 182, 212, 0.18);
+      --accent-primary: #22d3ee;
+      --accent-secondary: #facc15;
+      --accent-gradient: linear-gradient(135deg, #06b6d4 0%, #eab308 100%);
+      --text-label: #22d3ee;
+      --text-value: #f8fafc;
+      --badge-hobby-bg: rgba(6, 182, 212, 0.15);
+      --badge-hobby-border: rgba(6, 182, 212, 0.5);
+      --badge-hobby-text: #67e8f9;
+      --badge-year-bg: rgba(234, 179, 8, 0.15);
+      --badge-year-text: #fde047;
+      --status-dot: #22d3ee;
+      --status-glow: rgba(34, 211, 238, 0.8);
+      --avatar-border: #facc15;
+      --avatar-glow: rgba(250, 204, 21, 0.5);
+      --divider-color: rgba(6, 182, 212, 0.15);
+      --orb-1: #0284c7;
+      --orb-2: #ca8a04;
+    }
+
+    :root[data-theme="emerald"] {
+      --bg-gradient: radial-gradient(circle at 50% 10%, #022c22 0%, #064e3b 40%, #021a12 100%);
+      --card-bg: rgba(6, 44, 34, 0.65);
+      --card-border: rgba(52, 211, 153, 0.25);
+      --card-glow: 0 20px 50px rgba(16, 185, 129, 0.2);
+      --accent-primary: #34d399;
+      --accent-secondary: #2dd4bf;
+      --accent-gradient: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
+      --text-label: #6ee7b7;
+      --text-value: #f0fdf4;
+      --badge-hobby-bg: rgba(52, 211, 153, 0.15);
+      --badge-hobby-border: rgba(52, 211, 153, 0.4);
+      --badge-hobby-text: #a7f3d0;
+      --badge-year-bg: rgba(20, 184, 166, 0.2);
+      --badge-year-text: #2dd4bf;
+      --status-dot: #10b981;
+      --status-glow: rgba(16, 185, 129, 0.8);
+      --avatar-border: #34d399;
+      --avatar-glow: rgba(52, 211, 153, 0.5);
+      --divider-color: rgba(52, 211, 153, 0.12);
+      --orb-1: #059669;
+      --orb-2: #0d9488;
+    }
+
+    :root[data-theme="sunset"] {
+      --bg-gradient: radial-gradient(circle at 30% 80%, #31121f 0%, #180914 50%, #0a0308 100%);
+      --card-bg: rgba(30, 12, 22, 0.7);
+      --card-border: rgba(251, 113, 133, 0.3);
+      --card-glow: 0 20px 50px rgba(244, 63, 94, 0.25);
+      --accent-primary: #fb7185;
+      --accent-secondary: #fb923c;
+      --accent-gradient: linear-gradient(135deg, #f43f5e 0%, #f97316 100%);
+      --text-label: #fca5a5;
+      --text-value: #fff1f2;
+      --badge-hobby-bg: rgba(249, 115, 22, 0.15);
+      --badge-hobby-border: rgba(249, 115, 22, 0.4);
+      --badge-hobby-text: #fdba74;
+      --badge-year-bg: rgba(244, 63, 94, 0.2);
+      --badge-year-text: #f43f5e;
+      --status-dot: #f43f5e;
+      --status-glow: rgba(244, 63, 94, 0.8);
+      --avatar-border: #fb7185;
+      --avatar-glow: rgba(251, 113, 133, 0.5);
+      --divider-color: rgba(251, 113, 133, 0.15);
+      --orb-1: #e11d48;
+      --orb-2: #ea580c;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      transition: background 0.6s ease;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      box-shadow: var(--card-glow);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .theme-transition {
+      transition: color 0.4s ease, background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .text-gradient {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .avatar-glow {
+      box-shadow: 0 0 20px var(--avatar-glow);
+    }
+
+    .status-dot-glow {
+      box-shadow: 0 0 10px var(--status-glow);
+    }
+
+    .row-border {
+      border-bottom: 1px dashed var(--divider-color);
+    }
+
+    /* Ambient Background Animated Orbs */
+    .ambient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+      pointer-events: none;
+      animation: float 12s infinite alternate ease-in-out;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, 50px) scale(1.1); }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 font-sans text-white relative overflow-x-hidden">
+
+  <!-- Ambient Glowing Background Orbs -->
+  <div class="ambient-orb w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] -top-20 -left-20" style="background: var(--orb-1);"></div>
+  <div class="ambient-orb w-[250px] h-[250px] sm:w-[450px] sm:h-[450px] -bottom-20 -right-20" style="background: var(--orb-2); animation-delay: -6s;"></div>
+
+  <!-- Theme Selector Toolbar -->
+  <div class="z-20 mb-6 bg-slate-900/80 border border-white/10 backdrop-blur-xl p-2 rounded-2xl flex items-center gap-2 shadow-2xl">
+    <span class="text-xs font-mono uppercase tracking-wider text-gray-400 pl-3 pr-2 hidden sm:inline-block flex items-center gap-1.5">
+      <i data-lucide="palette" class="w-3.5 h-3.5"></i> Theme:
+    </span>
+    <div class="flex items-center gap-1.5">
+      <button onclick="setTheme('indigo')" id="btn-indigo" class="theme-btn relative px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all duration-300 bg-white/10 text-white">
+        <span class="w-3 h-3 rounded-full bg-indigo-500 inline-block shadow-[0_0_8px_#6366f1]"></span>
+        <span>Electric Indigo</span>
+      </button>
+      <button onclick="setTheme('cyberpunk')" id="btn-cyberpunk" class="theme-btn relative px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all duration-300 text-gray-400 hover:text-white hover:bg-white/5">
+        <span class="w-3 h-3 rounded-full bg-cyan-400 inline-block shadow-[0_0_8px_#22d3ee]"></span>
+        <span>Cyberpunk</span>
+      </button>
+      <button onclick="setTheme('emerald')" id="btn-emerald" class="theme-btn relative px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all duration-300 text-gray-400 hover:text-white hover:bg-white/5">
+        <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block shadow-[0_0_8px_#34d399]"></span>
+        <span>Emerald Glass</span>
+      </button>
+      <button onclick="setTheme('sunset')" id="btn-sunset" class="theme-btn relative px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all duration-300 text-gray-400 hover:text-white hover:bg-white/5">
+        <span class="w-3 h-3 rounded-full bg-rose-500 inline-block shadow-[0_0_8px_#f43f5e]"></span>
+        <span>Sunset Crimson</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Profile Card Container -->
+  <div class="glass-card z-10 w-full max-w-[820px] rounded-3xl p-6 sm:p-10 theme-transition relative overflow-hidden group">
+    
+    <!-- Top Decorative Highlight Bar -->
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[var(--accent-primary)] to-transparent opacity-80"></div>
+
+    <!-- Header Section -->
+    <div class="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-6 pb-8 border-b border-white/10">
+      
+      <!-- Profile Picture Frame -->
+      <div class="relative group/avatar">
+        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-2 theme-transition avatar-glow p-1 bg-black/40" style="border-color: var(--avatar-border)">
+          <img 
+            src="1.png" 
+            alt="Matrix N. Noche" 
+            class="w-full h-full object-cover object-top rounded-xl group-hover/avatar:scale-105 transition-transform duration-500"
+            onerror="this.onerror=null; this.src='https://placehold.co/120x120/1e293b/818cf8?text=Profile';"
+          />
+        </div>
+        <!-- Active Status Tag on Image -->
+        <div class="absolute -bottom-2 -right-2 bg-slate-900/90 border border-white/10 px-2.5 py-0.5 rounded-full flex items-center gap-1.5 text-[10px] font-mono tracking-wider text-gray-300 shadow-md">
+          <span class="w-2 h-2 rounded-full theme-transition status-dot-glow" style="background-color: var(--status-dot);"></span>
+          ONLINE
+        </div>
+      </div>
+
+      <!-- Title & Subtitle -->
+      <div class="flex flex-col justify-center my-auto">
+        <div class="flex items-center justify-center sm:justify-start gap-2 mb-1">
+          <span class="text-xs font-mono uppercase tracking-widest px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-gray-300">
+            Student Identity
+          </span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-2">
+          Personal <span class="text-gradient">Profile</span>
+        </h1>
+        <div class="flex items-center justify-center sm:justify-start gap-2.5">
+          <span class="w-2.5 h-2.5 rounded-full theme-transition status-dot-glow" style="background-color: var(--status-dot);"></span>
+          <span class="text-sm sm:text-base font-medium text-gray-300/90 tracking-wide">
+            Active Student Portfolio
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Rows Grid -->
+    <div class="pt-2">
+      
+      <!-- Full Name -->
+      <div class="grid grid-cols-1 md:grid-cols-12 py-4.5 sm:py-5 items-center row-border gap-1 md:gap-4 hover:bg-white/[0.02] transition-colors rounded-xl px-2 sm:px-3">
+        <div class="md:col-span-4 font-mono font-bold text-xs sm:text-sm tracking-wider uppercase theme-transition flex items-center gap-2" style="color: var(--text-label);">
+          <i data-lucide="user" class="w-4 h-4 opacity-70"></i>
+          FULL NAME
+        </div>
+        <div class="md:col-span-8 font-semibold text-base sm:text-lg theme-transition" style="color: var(--text-value);">
+          Matrix N. Noche
+        </div>
+      </div>
+
+      <!-- Birthday -->
+      <div class="grid grid-cols-1 md:grid-cols-12 py-4.5 sm:py-5 items-center row-border gap-1 md:gap-4 hover:bg-white/[0.02] transition-colors rounded-xl px-2 sm:px-3">
+        <div class="md:col-span-4 font-mono font-bold text-xs sm:text-sm tracking-wider uppercase theme-transition flex items-center gap-2" style="color: var(--text-label);">
+          <i data-lucide="calendar" class="w-4 h-4 opacity-70"></i>
+          BIRTHDAY
+        </div>
+        <div class="md:col-span-8 font-medium text-base sm:text-lg text-gray-200">
+          July 11, 2007
+        </div>
+      </div>
+
+      <!-- Age -->
+      <div class="grid grid-cols-1 md:grid-cols-12 py-4.5 sm:py-5 items-center row-border gap-1 md:gap-4 hover:bg-white/[0.02] transition-colors rounded-xl px-2 sm:px-3">
+        <div class="md:col-span-4 font-mono font-bold text-xs sm:text-sm tracking-wider uppercase theme-transition flex items-center gap-2" style="color: var(--text-label);">
+          <i data-lucide="clock" class="w-4 h-4 opacity-70"></i>
+          AGE
+        </div>
+        <div class="md:col-span-8 font-medium text-base sm:text-lg text-gray-200">
+          19 Years Old
+        </div>
+      </div>
+
+      <!-- Home Address -->
+      <div class="grid grid-cols-1 md:grid-cols-12 py-4.5 sm:py-5 items-center row-border gap-1 md:gap-4 hover:bg-white/[0.02] transition-colors rounded-xl px-2 sm:px-3">
+        <div class="md:col-span-4 font-mono font-bold text-xs sm:text-sm tracking-wider uppercase theme-transition flex items-center gap-2" style="color: var(--text-label);">
+          <i data-lucide="map-pin" class="w-4 h-4 opacity-70"></i>
+          HOME ADDRESS
+        </div>
+        <div class="md:col-span-8 font-medium text-base sm:text-lg text-gray-200 leading-relaxed">
+          Blk 18 Lot 20, Biinayuyo St., Amparo Subd., Brgy. 179, Caloocan City, Metro Manila
+        </div>
+      </div>
+
+      <!-- Hobbies -->
+      <div class="grid grid-cols-1 md:grid-cols-12 py-4.5 sm:py-5 items-center row-border gap-1 md:gap-4 hover:bg-white/[0.02] transition-colors rounded-xl px-2 sm:px-3">
+        <div class="md:col-span-4 font-mono font-bold text-xs sm:text-sm tracking-wider uppercase theme-transition flex items-center gap-2" style="color: var(--text-label);">
+          <i data-lucide="activity" class="w-4 h-4 opacity-70"></i>
+          HOBBIES
+        </div>
+        <div class="md:col-span-8 flex items-center">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl font-semibold text-sm sm:text-base tracking-wide theme-transition backdrop-blur-md" 
+                style="background-color: var(--badge-hobby-bg); border: 1px solid var(--badge-hobby-border); color: var(--badge-hobby-text);">
+            <i data-lucide="trophy" class="w-4 h-4"></i>
+            Chess, Basketball, Online Games
+          </span>
+        </div>
+      </div>
+
+      <!-- Program -->
+      <div class="grid grid-cols-1 md:grid-cols-12 py-4.5 sm:py-5 items-center row-border gap-1 md:gap-4 hover:bg-white/[0.02] transition-colors rounded-xl px-2 sm:px-3">
+        <div class="md:col-span-4 font-mono font-bold text-xs sm:text-sm tracking-wider uppercase theme-transition flex items-center gap-2" style="color: var(--text-label);">
+          <i data-lucide="book-open" class="w-4 h-4 opacity-70"></i>
+          PROGRAM
+        </div>
+        <div class="md:col-span-8 font-medium text-base sm:text-lg text-gray-200 leading-relaxed">
+          Bachelor of Science in Information Technology
+        </div>
+      </div>
+
+      <!-- Year Level -->
+      <div class="grid grid-cols-1 md:grid-cols-12 py-4.5 sm:py-5 items-center row-border gap-1 md:gap-4 hover:bg-white/[0.02] transition-colors rounded-xl px-2 sm:px-3">
+        <div class="md:col-span-4 font-mono font-bold text-xs sm:text-sm tracking-wider uppercase theme-transition flex items-center gap-2" style="color: var(--text-label);">
+          <i data-lucide="award" class="w-4 h-4 opacity-70"></i>
+          YEAR LEVEL
+        </div>
+        <div class="md:col-span-8 flex items-center">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-semibold text-sm sm:text-base border border-white/10 theme-transition" 
+                style="background-color: var(--badge-year-bg); color: var(--badge-year-text);">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            2nd Year
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer Action Bar -->
+    <div class="mt-6 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-gray-400">
+      <div class="flex items-center gap-2">
+        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i> Verified Academic Record
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="copyData()" class="hover:text-white transition-colors flex items-center gap-1 bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg border border-white/10">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Profile Data
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 border border-white/20 text-white px-4 py-2.5 rounded-xl shadow-2xl text-xs font-mono flex items-center gap-2 translate-y-20 opacity-0 transition-all duration-300 z-50">
+    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toast-msg">Copied to clipboard!</span>
+  </div>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Theme Switcher Logic
+    function setTheme(themeName) {
+      document.documentElement.setAttribute('data-theme', themeName);
+
+      // Update button active state styles
+      const buttons = document.querySelectorAll('.theme-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-white/10', 'text-white');
+        btn.classList.add('text-gray-400', 'hover:text-white');
+      });
+
+      const activeBtn = document.getElementById(`btn-${themeName}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-white/10', 'text-white');
+        activeBtn.classList.remove('text-gray-400');
+      }
+    }
+
+    // Set Default Theme
+    setTheme('indigo');
+
+    // Clipboard Copy Function
+    function copyData() {
+      const profileText = `FULL NAME: Matrix N. Noche
+BIRTHDAY: July 11, 2007
+AGE: 19 Years Old
+HOME ADDRESS: Blk 18 Lot 20, Biinayuyo St., Amparo Subd., Brgy. 179, Caloocan City, Metro Manila
+HOBBIES: Chess, Basketball, Online Games
+PROGRAM: Bachelor of Science in Information Technology
+YEAR LEVEL: 2nd Year`;
+
+      // Fallback copy execution
+      const el = document.createElement('textarea');
+      el.value = profileText;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+
+      // Toast Notification Trigger
+      const toast = document.getElementById('toast');
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
